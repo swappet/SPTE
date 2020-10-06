@@ -1,0 +1,52 @@
+{
+  "contracts": {
+    "SPTE": {
+      "address": "0xC89Ce4735882C9F0f0FE26686c53074E09B0D550",
+      "constructorCode": "608060405234801561001057600080fd5b5060ba8061001f6000396000f3fe",
+      "bodyBytecodeHash": "2a8e339338dd6059ab5fa07a902dbecfeab0fd713fda8723705414870c701145",
+      "localBytecodeHash": "b18397e75644648ec8e23e7532b90de1d69485e43de438ad20e5b725a5a174b8",
+      "deployedBytecodeHash": "b18397e75644648ec8e23e7532b90de1d69485e43de438ad20e5b725a5a174b8",
+      "types": {
+        "t_uint256": {
+          "id": "t_uint256",
+          "kind": "elementary",
+          "label": "uint256"
+        }
+      },
+      "storage": [
+        {
+          "contract": "SPTE",
+          "path": "contracts/SPTE.sol",
+          "label": "value",
+          "astId": 60,
+          "type": "t_uint256",
+          "src": "148:20:1"
+        }
+      ],
+      "warnings": {
+        "hasConstructor": false,
+        "hasSelfDestruct": false,
+        "hasDelegateCall": false,
+        "hasInitialValuesInDeclarations": false,
+        "uninitializedBaseContracts": []
+      }
+    }
+  },
+  "solidityLibs": {},
+  "proxies": {
+    "SPTE/SPTE": [
+      {
+        "address": "0x9561C133DD8580860B6b7E504bC5Aa500f0f06a7",
+        "version": "1.0.0",
+        "implementation": "0xC89Ce4735882C9F0f0FE26686c53074E09B0D550",
+        "admin": "0xD833215cBcc3f914bD1C9ece3EE7BF8B14f841bb",
+        "kind": "Upgradeable"
+      }
+    ]
+  },
+  "manifestVersion": "2.2",
+  "version": "1.0.0",
+  "proxyAdmin": {
+    "address": "0xD833215cBcc3f914bD1C9ece3EE7BF8B14f841bb"
+  }
+}
