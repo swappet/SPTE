@@ -1,0 +1,25 @@
+{
+  "name": "spte",
+  "version": "1.0.0",
+  "description": "Swap.Pet Token of Eggs from Chicken Farm",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/swappet/SPTE.git"
+  },
+  "keywords": [
+    "SPTE",
+    "SPT",
+    "SWAPPET",
+    "Swap.Pet"
+  ],
+  "author": "swap.pet@pm.me",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/swappet/SPTE/issues"
+  },
+  "homepage": "https://github.com/swappet/SPTE#readme"
+}
