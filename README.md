@@ -68,17 +68,17 @@ module.exports = {
 
   compilers: {
     solc: {
-      version: "0.5.2",
-      docker: false,
-      settings: {
+      version: "^0.6.0",    // Fetch exact version from solc-bin (default: truffle's version)
+      // docker: true,        // Use "0.5.1" you've installed locally with docker (default: false)
+      settings: {          // See the solidity docs for advice about optimization and evmVersion
        optimizer: {
          enabled: true,
          runs: 200
        },
-       evmVersion: "byzantium"
+       // evmVersion: "byzantium" // istanbul(default),constantinople,byzantium
       }
-    }
-  }
+    },
+  },
 }
 ```
 
@@ -111,23 +111,9 @@ contract Migrations {
 }
 ```
 
-## edit first contact 
-add `contracts/SPTE.sol`:
-```
-// contracts/SPTE.sol
-// Copyright (C) 2020, 2021, 2022 Swap.Pet@pm.me
-// SPDX-License-Identifier: MIT
-pragma solidity ^0.6.0;
-
-contract SPTE {
-    uint256 public value;
-
-    function increase() public {
-      value++;
-    }
-}
-```
-
+## edit `contracts/SPTE.sol` 
+OpenZeppelin regular Contracts Library:`$ npm install @openzeppelin/contracts` 
+ 
 ## deploy as `regular` contact
 ```
 $ npx oz deploy
@@ -148,105 +134,39 @@ Truffle output:
 ? Choose the kind of deployment regular
 ? Pick a network development
 ? Pick a contract to deploy SPTE
+? name: string: Swap.Pet Token of Eggs
+? symbol: string: SPTE
+? totalSupply: uint256: 1000000e18
 ✓ Deployed instance of SPTE
-0xCfEB869F69431e42cdB54A4F4f105C19C080A601
-```
-
-## deploy as `upgradeable` contact
-```
-$ npx oz deploy
-✓ Compiling contracts with Truffle, using settings from truffle.js file
-Truffle output:
- 
-Compiling your contracts...
-===========================
-> Compiling ./contracts/Migrations.sol
-> Compiling ./contracts/SPTE.sol
-> Artifacts written to ~/SPTE/build/contracts
-> Compiled successfully using:
-   - solc: 0.6.12+commit.27d51765.Emscripten.clang
-
-
-Truffle output:
- - Fetching solc version list from solc-bin. Attempt #1 
-
-? Choose the kind of deployment upgradeable
-? Pick a network development
-? Pick a contract to deploy SPTE
-✓ Contract SPTE deployed
-All implementations have been deployed
-? Call a function to initialize the instance after creating it? No
-✓ Setting everything up to create contract instances
-✓ Instance created at 0xD833215cBcc3f914bD1C9ece3EE7BF8B14f841bb
-To upgrade this instance run 'oz upgrade'
-0xD833215cBcc3f914bD1C9ece3EE7BF8B14f841bb
-```
-
-## truffle migrate
-add `migrations/2_deploy_SPTE.js`:
-```
-const { scripts, ConfigManager } = require('@openzeppelin/cli');
-const { add, push, create } = scripts;
-
-async function deploy(options) {
-  add({ contractsData: [{ name: 'SPTE', alias: 'SPTE' }] });
-  await push(options);
-  await create(Object.assign({ contractAlias: 'SPTE' }, options));
-}
-
-module.exports = function(deployer, networkName, accounts) {
-  deployer.then(async () => {
-    const { network, txParams } = await ConfigManager.initNetworkConfiguration({ network: networkName, from: accounts[0] })
-    await deploy({ network, txParams })
-  })
-}
-
-```
-
-truffle migrate:
-```
-$ npx truffle migrate
-
-Compiling your contracts...
-===========================
-✔ Fetching solc version list from solc-bin. Attempt #1 
-> Everything is up to date, there is nothing to compile.
-
-Starting migrations...
-======================
-> Network name:    'development'
-> Network id:      1601970275037
-> Block gas limit: 6721975 (0x6691b7)
-
-
-2_deploy_SPTE.js
-================
-0x9561C133DD8580860B6b7E504bC5Aa500f0f06a7
-
-   > Saving migration to chain.
-   -------------------------------------
-   > Total cost:                   0 ETH
-
-
-Summary
-=======
-> Total deployments:   0
-> Final cost:          0 ETH
+0xe78A0F7E598Cc8b0Bb87894B0F60dD2a88d6a8Ab
 ```
 
 ## interact with openzeppelin CLI
-such as deploy at :0xCfEB869F69431e42cdB54A4F4f105C19C080A601
+such as deploy at :0xe78A0F7E598Cc8b0Bb87894B0F60dD2a88d6a8Ab
 ```
 $ npx oz send-tx     
 ? Pick a network development
-? Pick an instance SPTE at 0xCfEB869F69431e42cdB54A4F4f105C19C080A601
-? Select which function increase()
-✓ Transaction successful. Transaction hash: 0xf9e47cca9c7817cd693d68877fd81220f8f307d4cbddc7e1aab335141c8a4e9e
+? Pick an instance SPTE at 0xe78A0F7E598Cc8b0Bb87894B0F60dD2a88d6a8Ab
+? Select which function snapshot()
+✓ Transaction successful. Transaction hash: 0x947478321c2c0d5fc2e3ec9951b2baa0dbb60e990482be3f35259bbf6022dd9a
+Events emitted: 
+ - Snapshot(1)
 
 $ npx oz call   
 ? Pick a network development
-? Pick an instance SPTE at 0xCfEB869F69431e42cdB54A4F4f105C19C080A601
-? Select which function value()
-✓ Method 'value()' returned: 1
-1
+? Pick an instance SPTE at 0xe78A0F7E598Cc8b0Bb87894B0F60dD2a88d6a8Ab
+? Select which function balanceOfAt(account: address, snapshotId: uint256)
+? account: address: 0x90F8bf6A479f320ead074411a4B0e7944Ea8c9C1
+? snapshotId: uint256: 1
+✓ Method 'balanceOfAt(address,uint256)' returned: 1000000000000000000000000000000000000000000
+1000000000000000000000000000000000000000000
+```
+
+## .gitignore
+add in file of `.gitignore`:
+```
+# openzeppelin
+.openzeppelin/.session
+.openzeppelin/dev-*.json
+build/
 ```

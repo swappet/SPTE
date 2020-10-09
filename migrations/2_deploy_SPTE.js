@@ -1,15 +1,14 @@
-const { scripts, ConfigManager } = require('@openzeppelin/cli');
-const { add, push, create } = scripts;
+// migrations/2_deploy_SPTE.js
+// Copyright (C) 2020, 2021, 2022 Swap.Pet@pm.me
+// SPDX-License-Identifier: MIT
 
-async function deploy(options) {
-  add({ contractsData: [{ name: 'SPTE', alias: 'SPTE' }] });
-  await push(options);
-  await create(Object.assign({ contractAlias: 'SPTE' }, options));
-}
+const SPTE = artifacts.require("SPTE"); 
 
-module.exports = function(deployer, networkName, accounts) {
-  deployer.then(async () => {
-    const { network, txParams } = await ConfigManager.initNetworkConfiguration({ network: networkName, from: accounts[0] })
-    await deploy({ network, txParams })
-  })
-}
+const ERC20Detail = [
+    "Swap.Pet Token of Eggs",   // name
+    "SPTE",              // symbol 
+    '1000000'              // totalSupply
+];
+module.exports = function(deployer) {
+    deployer.deploy(SPTE,...ERC20Detail);
+};
